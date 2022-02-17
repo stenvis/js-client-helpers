@@ -1,26 +1,4 @@
-class Counter {
-   #i = 0;   
-
-   get value() {
-      return this.#i;
-   }
-
-   set plus(n) {
-      this.#i += n;
-   }
-   
-   set minus(n) {
-      this.#i -= n;
-   }
-
-   set equal(n) {
-      this.#i = n;
-   }
-
-   reset() {
-      this.#i = 0;
-   }
-};
+import Counter from './counter.js';
 
 class Balloon {
    #step = 1;
@@ -85,4 +63,4 @@ class Balloon {
    }
 };
 
-export { Ballon, Counter };
+export default Balloon; 

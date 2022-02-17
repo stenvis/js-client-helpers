@@ -7,7 +7,9 @@ class Resize {
    dependencies = {};
    keys = [];
 
-   constructor(target) {
+   constructor(target, w = target.clientWidth, h = target.clientHeight) {
+      target.width = w;
+      target.height = h;
       this.target = target;
       new ResizeObserver(this.executeResize).observe(target);
    }
