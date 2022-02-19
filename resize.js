@@ -18,7 +18,7 @@ class Resize {
       return this.aspect;
    }
 
-   setDependency(key, fn) {
+   addDependency(key, fn) {
       this.dependencies[key] = fn;
       this.setKeys();
    }
@@ -33,9 +33,7 @@ class Resize {
    }
 
    execDependencies() {
-      this.execDependencies = function() {
-         this.keys.forEach(key => { this.dependencies[key](); });
-      };
+      for (const key of this.keys) this.dependencies[key]();
    }
 
    executeResize = entries => {

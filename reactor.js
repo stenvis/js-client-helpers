@@ -5,25 +5,29 @@ const stub = () => {};
 class Reactor {
    #pool = {};
    #tasks = [];
-   #worker;
+   #worker = stub;
    #SWorker = new State();
 
    #executeTasks() {
-      for (task of this.#tasks) task();
+      for (const task of this.#tasks) task();
       this.#tasks = []; 
       this.#worker = stub;
       this.#SWorker.toggle();
    }
 
    #setWorker() {
-      if (!this.#SWorker.isActive) return;
+      if (this.#SWorker.isActive) return;
       this.#SWorker.toggle();
       this.#worker = this.#executeTasks;
    }
 
    addKernel(key, kernel) {
-      this.#tasks.push(() => { this.#pool[key] = kernel; });
-      this.#setWorker();
+      this.addKernel = function(key, kernel) {
+         this.#tasks.push(() => { this.#pool[key] = kernel; });
+         this.#setWorker();
+      };
+      this.addKernel(key, kernel);
+      this.#worker();
    }
 
    delKernel(key) {
@@ -37,10 +41,6 @@ class Reactor {
          this.#worker();
       };
    }
-
-   t() {
-      console.log(this.#SWorker);
-   } 
 };
 
 export default Reactor;
